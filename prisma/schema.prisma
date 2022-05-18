@@ -1,0 +1,42 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url = env("database")
+}
+
+model Debtor{
+    id Int @id @default(autoincrement())
+    loans Loan[]
+}
+
+model Loan{
+    id Int @id @default(autoincrement())
+    debtorId Int
+    debtor Debtor @relation(fields: [debtorId], references: [id])
+    payments Payment[]
+    type Type @relation(fields: [typeId], references: [id])
+    typeId Int
+    loanDate DateTime @default(now())
+    paymentCompleteDate DateTime?
+}
+
+model Type{
+    id Int @id @default(autoincrement())
+    type String
+    loans Loan[]
+}
+
+model Payment{
+    id Int @id @default(autoincrement())
+    loan Loan @relation(fields: [loanId], references: [id])
+    loanId Int
+    paymentDate DateTime @default(now())
+    payType Pytype @default(INTERES)
+}
+enum Pytype{
+    INTERES
+    ABONO
+}
