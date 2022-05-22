@@ -8,7 +8,18 @@ class LoanController{
             const loan = await prisma.loan.findMany({
                 where:{
                     paymentCompleteDate: null
+                },
+                include:{
+                    debtor:true,
+                    payments:true
                 }
+            });
+            loan.forEach(element => {
+                element.amount = Number.parseFloat(element.amount);
+                element.current_debt = Number.parseFloat(element.amount - element ?. payments.reduce((acum,current) => acum + current.amount ,0));
+
+                element.hasPayments = (element.amount !== element.current_debt) ? true : false;
+                
             });
             res.json(loan);
         }catch(error){

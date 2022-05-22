@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Payment` ADD COLUMN `amount` DECIMAL(10, 3) NOT NULL DEFAULT 0;

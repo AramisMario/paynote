@@ -1,10 +1,12 @@
 import express from "express";
 import loanRoutes from "./routes/loanRoutes";
-
+import cors from 'cors';
 const server = express();
-const port = 3000;
+const port = 4000;
+
 
 server.set('port',port);
+server.use(cors());
 server.use(express.json());
 server.use('/loans',loanRoutes);
 
