@@ -1,27 +1,12 @@
-import {showActiveLoans} from "../queries/loanQueries";
 import {Request, Response} from "express";
-import {prisma} from "../../prisma/prismaInstance";
+import {activeLoans} from "../queries/loanQueries";
+
 class LoanController{
 
     async activeLoans(req,res){
         try{
-            const loan = await prisma.loan.findMany({
-                where:{
-                    paymentCompleteDate: null
-                },
-                include:{
-                    debtor:true,
-                    payments:true
-                }
-            });
-            loan.forEach(element => {
-                element.amount = Number.parseFloat(element.amount);
-                element.current_debt = Number.parseFloat(element.amount - element ?. payments.reduce((acum,current) => acum + current.amount ,0));
-
-                element.hasPayments = (element.amount !== element.current_debt) ? true : false;
-                
-            });
-            res.json(loan);
+            const loans = await activeLoans(req,res);
+            res.json(loans);
         }catch(error){
             res.json({"error":error.message});
         }
