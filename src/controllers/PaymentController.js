@@ -4,7 +4,7 @@ class PaymentController{
     async createPayment(req,res){
         try{
 
-            const loans = await createPayment();
+            const loans = await createPayment(req,res);
             res.json(loans);
 
         }catch(error){
