@@ -1,6 +1,8 @@
 import express from "express";
 import loanRoutes from "./routes/loanRoutes";
 import paymentRoutes from "./routes/paymentRoutes";
+import debtorRoutes from "./routes/debtorRoutes";
+
 import cors from 'cors';
 const server = express();
 const port = 4000;
@@ -11,6 +13,7 @@ server.use(cors());
 server.use(express.json());
 server.use('/loans',loanRoutes);
 server.use('/payments',paymentRoutes);
+server.use('/debtors',debtorRoutes);
 
 server.listen(port, () => {
     console.log(`server listening on port: ${port}`);

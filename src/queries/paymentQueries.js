@@ -16,3 +16,20 @@ export async function createPayment(req,res){
     const loans = await activeLoans(req,res);
     return loans;
 }
+
+export async function historical(req,res){
+    const payments = await prisma.payment.findMany({
+        orderBy:{
+            paymentDate: 'desc'
+        },
+        include:{
+            loan:{
+                include:{
+                    debtor:true
+                }
+            }
+        } 
+    });
+
+    return payments;
+}

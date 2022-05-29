@@ -9,6 +9,7 @@ class PaymentRoutes{
 
     routes(){
         this.router.post("/create",paymentController.createPayment);
+        this.router.get("/historical",paymentController.historical);
     }
 
 }
