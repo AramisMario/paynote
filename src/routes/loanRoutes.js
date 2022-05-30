@@ -14,7 +14,8 @@ class LoansRoutes{
 
     routes(){
         this.router.get('/showactive',loanController.activeLoans);
-        this.router.get('/allloans',loanController.allLoans)
+        this.router.get('/allloans',loanController.allLoans);
+        this.router.post('/createloan',loanController.createLoan);
     }
 }
 
